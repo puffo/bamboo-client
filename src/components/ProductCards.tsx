@@ -1,25 +1,16 @@
 import React from "react";
 import netlifyIdentity from "netlify-identity-widget";
-import DeleteIcon from "@material-ui/icons/Delete";
+
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import EditIcon from "@material-ui/icons/Create";
+
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ExpandIcon from "@material-ui/icons/AddCircle";
-import clsx from "clsx";
-import Collapse from "@material-ui/core/Collapse";
-
-import AdjustContractControls from "./contracts/AdjustContractControls";
-import ContractDetails from "./contracts/ContractDetails";
+import ProductCardControls from "./products/ProductCardControls";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -27,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(8)
   },
   card: {
-    height: "100%",
+    // height: "100%", // TODO Fix constant height later
     display: "flex",
     flexDirection: "column"
   },
@@ -49,14 +40,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const cards = [
+const products = [
   {
     id: 1,
     imageUrl:
       "https://images.unsplash.com/photo-1520089395365-001d26ba155b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80",
     imageText: "iPhone image",
     title: "iPhone X",
-    description: "Avoid drops and spills!"
+    description: "Avoid drops and spills!",
+    isFavorite: true
   },
   {
     id: 2,
@@ -64,7 +56,17 @@ const cards = [
       "https://images.unsplash.com/photo-1530173235220-f6825c107a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
     imageText: "Mountain bike image",
     title: "Mountain Bike",
-    description: "Ride with confidence this weekend."
+    description: "Ride with confidence this weekend.",
+    isFavorite: false
+  },
+  {
+    id: 3,
+    imageUrl:
+      "https://images.unsplash.com/photo-1530173235220-f6825c107a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
+    imageText: "Mountain bike image",
+    title: "Bike GPS",
+    description: "Stay on track.",
+    isFavorite: false
   }
 ];
 
@@ -73,69 +75,32 @@ export default function ProductCards() {
   const user = netlifyIdentity.currentUser();
   console.log({ user });
 
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   return (
     <Container className={classes.cardGrid} maxWidth="md">
-      {/* End hero unit */}
       <Grid container spacing={4}>
-        {cards.map(card => (
-          <Grid item key={card.id} xs={12} sm={6} md={6}>
-            {/* <ProductCard imageUrl={card.imageUrl} /> */}
+        {products.map(product => (
+          <Grid item key={product.id} xs={12} sm={6} md={6}>
+            {/* <ProductCard imageUrl={product.imageUrl} /> */}
             <Card className={classes.card}>
               <CardMedia
                 className={classes.cardMedia}
-                image={card.imageUrl}
-                title="Image title"
+                image={product.imageUrl}
+                title={product.imageText}
               />
               <CardContent className={classes.cardContent}>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {card.title}
+                  {product.title}
                 </Typography>
-                <Typography>{card.description}</Typography>
+                <Typography>{product.description}</Typography>
               </CardContent>
-
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton
-                  className={clsx(classes.expand, {
-                    [classes.expandOpen]: expanded
-                  })}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  {/* <EditIcon /> */}
-                  <ExpandIcon />
-                </IconButton>
-              </CardActions>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                  <ContractDetails
-                    duration={"1 Week"}
-                    price={"$10"}
-                    terms={"Covers scratches, breakages, and failures."}
-                  />
-
-                  {/* Replace functions and pass down props  */}
-                  <AdjustContractControls
-                    currentlyAccepted={true}
-                    validUntil={"11 Nov  2019"}
-                    removeAction={() => {
-                      console.log("Calling microservice to remove contract...");
-                    }}
-                    confirmAction={() => {
-                      console.log("Calling microservice to accept contract...");
-                    }}
-                  />
-                </CardContent>
-              </Collapse>
+              <ProductCardControls
+                isFavorite={product.isFavorite}
+                addFavoriteAction={() => {
+                  console.log(
+                    `Calling microservice to add product ${product.id}...`
+                  );
+                }}
+              />
             </Card>
           </Grid>
         ))}

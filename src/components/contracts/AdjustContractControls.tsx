@@ -12,7 +12,7 @@ export default function AdjustContractControls({
   removeAction,
   confirmAction
 }) {
-  const button = function() {
+  const button = () => {
     if (currentlyAccepted) {
       return (
         <Button
@@ -37,7 +37,7 @@ export default function AdjustContractControls({
       );
     }
   };
-  const expiring = function() {
+  const expiring = () => {
     if (currentlyAccepted) {
       return (
         <Typography variant="subtitle2" gutterBottom>

@@ -17,11 +17,6 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
   },
-  card: {
-    height: "auto",
-    display: "flex",
-    flexDirection: "column"
-  },
   cardMedia: {
     paddingTop: "56.25%" // 16:9
   },
@@ -81,7 +76,7 @@ export default function ProductCards() {
         {products.map(product => (
           <Grid item key={product.id} xs={12} sm={6} md={6}>
             {/* <ProductCard imageUrl={product.imageUrl} /> */}
-            <Card className={classes.card}>
+            <Card>
               <CardMedia
                 className={classes.cardMedia}
                 image={product.imageUrl}

@@ -93,8 +93,8 @@ function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={props =>
-        netlifyAuth.isAuthenticated ? (
-          // true ? ( // uncomment to debug logged in page
+        // netlifyAuth.isAuthenticated ? (
+        true ? ( // uncomment to debug logged in page
           <Component {...props} />
         ) : (
           <Redirect

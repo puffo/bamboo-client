@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(8)
   },
   card: {
-    // height: "100%", // TODO Fix constant height later
+    height: "auto",
     display: "flex",
     flexDirection: "column"
   },

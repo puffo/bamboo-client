@@ -3,13 +3,10 @@ import { render } from "react-dom";
 import MainPage from "./components/MainPage";
 
 import registerServiceWorker from "./components/authentication/registerServiceWorker";
-import netlifyIdentity from "netlify-identity-widget";
-
+import authStarter from "./components/authentication/authStarter";
 import "./styles.css";
 
-window.netlifyIdentity = netlifyIdentity;
-// You must run this once before trying to interact with the widget
-netlifyIdentity.init();
+authStarter();
 
 function App() {
   return (

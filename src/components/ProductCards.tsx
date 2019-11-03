@@ -11,9 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
 
-import ProductCard from "./products/ProductCard";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandIcon from "@material-ui/icons/AddCircle";
@@ -21,6 +19,7 @@ import clsx from "clsx";
 import Collapse from "@material-ui/core/Collapse";
 
 import AdjustContractControls from "./contracts/AdjustContractControls";
+import ContractDetails from "./contracts/ContractDetails";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -118,13 +117,16 @@ export default function ProductCards() {
               </CardActions>
               <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                  <Typography paragraph>Duration: 1 Week</Typography>
-                  <Typography paragraph>Price: $3</Typography>
-                  <Typography paragraph>Terms: View terms</Typography>
+                  <ContractDetails
+                    duration={"1 Week"}
+                    price={"$10"}
+                    terms={"Covers scratches, breakages, and failures."}
+                  />
 
                   {/* Replace functions and pass down props  */}
                   <AdjustContractControls
                     currentlyAccepted={true}
+                    validUntil={"11 Nov  2019"}
                     removeAction={() => {
                       console.log("Calling microservice to remove contract...");
                     }}

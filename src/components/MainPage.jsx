@@ -1,14 +1,7 @@
 import React from "react";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import EditIcon from "@material-ui/icons/Create";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import BambooIcon from "@material-ui/icons/VerifiedUser";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -18,6 +11,7 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 
 import AuthFlow from "./authentication/AuthFlow";
+import ProductCards from "./ProductCards";
 
 function Copyright() {
   return (
@@ -64,23 +58,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const cards = [
-  {
-    id: 1,
-    imageUrl:
-      "https://images.unsplash.com/photo-1520089395365-001d26ba155b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80",
-    title: "iPhone X",
-    description: "Avoid drops and spills!"
-  },
-  {
-    id: 2,
-    imageUrl:
-      "https://images.unsplash.com/photo-1530173235220-f6825c107a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
-    title: "Mountain Bike",
-    description: "Ride with confidence this weekend."
-  }
-];
-
 export default function MainPage() {
   const classes = useStyles();
 
@@ -117,68 +94,11 @@ export default function MainPage() {
               Review and purchase your short term insurance
             </Typography>
             <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Log In
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Sign Up
-                  </Button>
-                </Grid>
-              </Grid>
-
               <AuthFlow />
             </div>
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card.id} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={card.imageUrl}
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.title}
-                    </Typography>
-                    <Typography>{card.description}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      color="primary"
-                      startIcon={<AddShoppingCartIcon />}
-                    >
-                      Buy Now
-                    </Button>
-                    <Button
-                      size="small"
-                      color="default"
-                      startIcon={<EditIcon />}
-                    >
-                      Adjust
-                    </Button>
-                    <Button
-                      size="small"
-                      color="secondary"
-                      startIcon={<DeleteIcon />}
-                    >
-                      Remove
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        {/* <ProductCards /> */}
       </main>
       {/* Footer */}
       <footer className={classes.footer}>

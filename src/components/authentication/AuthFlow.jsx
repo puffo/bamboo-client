@@ -1,6 +1,9 @@
 import React from "react";
-import Protected from "./Protected";
+
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 import Public from "./Public";
+import ProductCards from "../ProductCards";
 import netlifyIdentity from "netlify-identity-widget";
 import {
   BrowserRouter as Router,
@@ -21,18 +24,27 @@ function AuthFlow() {
   return (
     <Router>
       <div>
+        <div>
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <Button variant="contained" color="primary">
+                <Link to="/protected">Log In</Link>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button variant="outlined" color="primary">
+                <Link to="/protected">Sign Up</Link>
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+
         <AuthButton />
-        <ul>
-          <li>
-            <Link to="/public">Public Page</Link>
-          </li>
-          <li>
-            <Link to="/protected">Protected Page</Link>
-          </li>
-        </ul>
+        {/* <Link to="/public">Public Page</Link> */}
+
         <Route path="/public" component={Public} />
         <Route path="/login" component={Login} />
-        <PrivateRoute path="/protected" component={Protected} />
+        <PrivateRoute path="/protected" component={ProductCards} />
       </div>
     </Router>
   );
@@ -82,6 +94,7 @@ function PrivateRoute({ component: Component, ...rest }) {
       {...rest}
       render={props =>
         netlifyAuth.isAuthenticated ? (
+          // true ? (                     // uncomment to debug logged in page
           <Component {...props} />
         ) : (
           <Redirect
@@ -115,7 +128,7 @@ class Login extends React.Component {
 
     return (
       <div>
-        <p>You must log in to view the page at {from.pathname}</p>
+        {/* <p>You must log in to view the page at {from.pathname}</p> */}
         <button onClick={this.login}>Log in</button>
       </div>
     );

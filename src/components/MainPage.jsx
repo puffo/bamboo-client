@@ -3,7 +3,7 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import EditIcon from "@material-ui/icons/Create";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
+import BambooIcon from "@material-ui/icons/VerifiedUser";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -17,12 +17,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 
+import AuthFlow from "./authentication/AuthFlow";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Bamboo
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -79,7 +81,7 @@ const cards = [
   }
 ];
 
-export default function Album() {
+export default function MainPage() {
   const classes = useStyles();
 
   return (
@@ -87,9 +89,9 @@ export default function Album() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <CameraIcon className={classes.icon} />
+          <BambooIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            View Products
+            Bamboo
           </Typography>
         </Toolbar>
       </AppBar>
@@ -114,20 +116,22 @@ export default function Album() {
             >
               Review and purchase your short term insurance
             </Typography>
-            {/* <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center"> */}
-            {/* <Grid item>
+            <div className={classes.heroButtons}>
+              <Grid container spacing={2} justify="center">
+                <Grid item>
                   <Button variant="contained" color="primary">
-                    Main call to action
+                    Log In
                   </Button>
-                </Grid> */}
-            {/* <Grid item>
+                </Grid>
+                <Grid item>
                   <Button variant="outlined" color="primary">
-                    Secondary action
+                    Sign Up
                   </Button>
-                </Grid> */}
-            {/* </Grid>
-            </div> */}
+                </Grid>
+              </Grid>
+
+              <AuthFlow />
+            </div>
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
@@ -179,7 +183,7 @@ export default function Album() {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          Bamboo
         </Typography>
         <Typography
           variant="subtitle1"
@@ -187,7 +191,7 @@ export default function Album() {
           color="textSecondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Taking care of your possessions.
         </Typography>
         <Copyright />
       </footer>

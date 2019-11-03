@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import BambooIcon from "@material-ui/icons/VerifiedUser";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,7 +11,6 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 
 import AuthFlow from "./authentication/AuthFlow";
-import ProductCards from "./ProductCards";
 
 function Copyright() {
   return (
@@ -43,21 +41,6 @@ const useStyles = makeStyles(theme => ({
   },
   heroButtons: {
     marginTop: theme.spacing(4)
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8)
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column"
-  },
-  cardMedia: {
-    paddingTop: "56.25%" // 16:9
-  },
-  cardContent: {
-    flexGrow: 1
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -103,12 +86,12 @@ export default function MainPage() {
               Get protected.
             </Typography>
             <Typography
-              variant="h5"
+              variant="h6"
               align="center"
               color="textSecondary"
               paragraph
             >
-              Review and purchase your short term insurance contracts.
+              Review and purchase your short term insurance contracts
             </Typography>
             <div className={classes.heroButtons}>
               <AuthFlow />

@@ -68,11 +68,11 @@ export default function ProductCards() {
   console.log({ user });
 
   return (
-    <Container className={classes.cardGrid} maxWidth="md">
+    <Container className={classes.cardGrid} maxWidth="l">
       {/* End hero unit */}
       <Grid container spacing={4}>
         {cards.map(card => (
-          <Grid item key={card.id} xs={12} sm={6} md={4}>
+          <Grid item key={card.id} xs={12} sm={6} md={6}>
             <Card className={classes.card}>
               <CardMedia
                 className={classes.cardMedia}

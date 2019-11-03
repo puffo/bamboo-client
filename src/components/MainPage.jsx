@@ -1,6 +1,7 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import BambooIcon from "@material-ui/icons/VerifiedUser";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -27,7 +28,13 @@ function Copyright() {
 }
 
 const useStyles = makeStyles(theme => ({
-  icon: {
+  appBar: {
+    flexGrow: 1
+  },
+  title: {
+    flexGrow: 1
+  },
+  menuButton: {
     marginRight: theme.spacing(2)
   },
   heroContent: {
@@ -64,14 +71,24 @@ export default function MainPage() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <BambooIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Bamboo
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <div className={classes.appBar}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <BambooIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              Bamboo
+            </Typography>
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
@@ -83,7 +100,7 @@ export default function MainPage() {
               color="textPrimary"
               gutterBottom
             >
-              Insure your items!
+              Get protected.
             </Typography>
             <Typography
               variant="h5"
@@ -91,7 +108,7 @@ export default function MainPage() {
               color="textSecondary"
               paragraph
             >
-              Review and purchase your short term insurance
+              Review and purchase your short term insurance contracts.
             </Typography>
             <div className={classes.heroButtons}>
               <AuthFlow />
@@ -102,9 +119,6 @@ export default function MainPage() {
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Bamboo
-        </Typography>
         <Typography
           variant="subtitle1"
           align="center"

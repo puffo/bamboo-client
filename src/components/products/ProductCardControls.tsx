@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { InferProps } from "prop-types";
 import clsx from "clsx";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,7 +26,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ProductCardControls({ isFavorite, addFavoriteAction }) {
+export default function ProductCardControls({
+  isFavorite,
+  addFavoriteAction
+}: InferProps<typeof ProductCardControls.propTypes>) {
   const [favourite, setFavourite] = useState(isFavorite);
   const [expanded, setExpanded] = React.useState(false);
   const classes = useStyles();

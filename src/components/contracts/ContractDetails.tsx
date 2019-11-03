@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes, { InferProps } from "prop-types";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -20,7 +20,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ContractDetails({ duration, price, terms }) {
+export default function ContractDetails({
+  duration,
+  price,
+  terms
+}: InferProps<typeof ContractDetails.propTypes>) {
   const classes = useStyles();
 
   return (

@@ -1,17 +1,24 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { InferProps } from "prop-types";
 
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import DeleteIcon from "@material-ui/icons/Delete";
 
+AdjustContractControls.propTypes = {
+  currentlyAccepted: PropTypes.bool.isRequired,
+  validUntil: PropTypes.string,
+  removeAction: PropTypes.func.isRequired,
+  confirmAction: PropTypes.func.isRequired
+};
+
 export default function AdjustContractControls({
   currentlyAccepted,
   validUntil,
   removeAction,
   confirmAction
-}) {
+}: InferProps<typeof AdjustContractControls.propTypes>) {
   const button = () => {
     if (currentlyAccepted) {
       return (
@@ -56,10 +63,3 @@ export default function AdjustContractControls({
     </div>
   );
 }
-
-AdjustContractControls.propTypes = {
-  currentlyAccepted: PropTypes.bool.isRequired,
-  validUntil: PropTypes.string,
-  removeAction: PropTypes.func.isRequired,
-  confirmAction: PropTypes.func.isRequired
-};

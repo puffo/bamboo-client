@@ -7,6 +7,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 interface ToggleProps {
   successActionCallback: () => void;
@@ -18,10 +19,12 @@ export default function MobileNumberDialog({
   const [openMobileNumber, setOpenMobileNumber] = React.useState(false);
   const [openConfirmCode, setOpenConfirmCode] = React.useState(false);
 
+  const [sendingCode, setSendingCode] = React.useState(false);
   const [mobileNumber, setMobileNumber] = useState("");
   const [code, setCode] = useState("");
 
   const login = () => {
+    setSendingCode(true);
     const fetchData = async () => {
       const url = "/.netlify/functions/login";
       const result = axios({
@@ -35,11 +38,13 @@ export default function MobileNumberDialog({
       })
         .then(response => {
           console.log("SMS sent");
+          setSendingCode(false);
           setOpenMobileNumber(false);
           setOpenConfirmCode(true);
         })
         .catch(err => {
           alert(`Could not send sms! \n${err}`);
+          setSendingCode(false);
         });
     };
 
@@ -91,6 +96,7 @@ export default function MobileNumberDialog({
     setOpenConfirmCode(false);
   };
   const handleCloseMobileNumber = () => {
+    setSendingCode(false);
     setOpenMobileNumber(false);
   };
 
@@ -121,6 +127,7 @@ export default function MobileNumberDialog({
             <DialogContentText variant="subtitle2">
               Confirm your mobile number
             </DialogContentText>
+            <LinearProgress hidden={!sendingCode} />
             <TextField
               autoFocus
               margin="normal"

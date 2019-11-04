@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import SimpleDialog from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,6 +13,8 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 
 import AuthFlow from "./authentication/AuthFlow";
+import MobileNumberDialog from "./simple_auth/MobileNumberDialog";
+import ProductCards from "./ProductCards";
 
 function Copyright() {
   return (
@@ -50,6 +54,48 @@ const useStyles = makeStyles(theme => ({
 
 export default function MainPage() {
   const classes = useStyles();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleSuccessfulLogin = () => {
+    setLoggedIn(true);
+    console.log("logged in successfully!");
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+  };
+
+  const displayCards = () => {
+    if (loggedIn) {
+      return <ProductCards />;
+    } else {
+      return false;
+    }
+  };
+
+  const displayAppBarLoginControls = () => {
+    if (loggedIn) {
+      return (
+        <Button color="inherit" onClick={handleLogout}>
+          Logout
+        </Button>
+      );
+    } else {
+      return displayHeroLoginButton();
+    }
+  };
+
+  const displayHeroLoginButton = () => {
+    if (loggedIn) {
+      return false;
+    } else {
+      return (
+        <MobileNumberDialog
+          successActionCallback={() => handleSuccessfulLogin()}
+        />
+      );
+    }
+  };
 
   return (
     <React.Fragment>
@@ -68,7 +114,7 @@ export default function MainPage() {
             <Typography variant="h6" className={classes.title}>
               Bamboo
             </Typography>
-            <Button color="inherit">Login</Button>
+            {displayAppBarLoginControls()}
           </Toolbar>
         </AppBar>
       </div>
@@ -94,11 +140,11 @@ export default function MainPage() {
               Review and purchase your short term insurance contracts
             </Typography>
             <div className={classes.heroButtons}>
-              <AuthFlow />
+              {displayHeroLoginButton()}
             </div>
           </Container>
         </div>
-        {/* <ProductCards /> */}
+        {displayCards()}
       </main>
       {/* Footer */}
       <footer className={classes.footer}>

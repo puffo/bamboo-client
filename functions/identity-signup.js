@@ -32,11 +32,14 @@ const productTemplates = [
 ];
 
 exports.handler = async (event, context) => {
-  const email = JSON.parse(event.body).user.email;
+  const userData = JSON.parse(event.body).user;
+  const email = userData.email;
+  const mobileNumber = userData.mobileNumber;
+
   const userRequestBody = JSON.stringify({
     email: email,
-    mobileNumber: "unknown",
-    externalReference: email
+    mobileNumber: mobileNumber,
+    externalReference: mobileNumber
   });
 
   // persist the new user

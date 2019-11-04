@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import SimpleDialog from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,7 +11,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 
-import AuthFlow from "./authentication/AuthFlow";
 import MobileNumberDialog from "./simple_auth/MobileNumberDialog";
 import ProductCards from "./ProductCards";
 
@@ -63,6 +61,7 @@ export default function MainPage() {
 
   const handleLogout = () => {
     setLoggedIn(false);
+    console.log("logged out!");
   };
 
   const displayCards = () => {

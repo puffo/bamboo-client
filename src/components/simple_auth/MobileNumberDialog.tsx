@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
 interface ToggleProps {
   successActionCallback: () => void;
@@ -15,15 +15,39 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
   const [openMobileNumber, setOpenMobileNumber] = React.useState(false);
   const [openConfirmCode, setOpenConfirmCode] = React.useState(false);
 
+  const [mobileNumber, setMobileNumber] = useState("");
+
+  const createVerification = () => {
+    const fetchData = async () => {
+      const url = "/.netlify/functions/login";
+      const result = await axios({
+        url: url,
+        method: "post",
+        headers: {
+          Accept: "application/json"
+        },
+        data: JSON.stringify({ to: mobileNumber }),
+        withCredentials: false
+      });
+      console.log(result.data);
+      setMobileNumber(result.data);
+    };
+
+    fetchData();
+  };
+
   const handleClickOpenMobileNumber = () => {
     setOpenMobileNumber(true);
   };
 
-  const handleCloseMobileNumber = () => {
-    setOpenMobileNumber(false);
+  const handleTypeMobileNumber = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setMobileNumber(event.target.value);
   };
 
   const handleSubmitMobileNumber = () => {
+    createVerification();
     setOpenMobileNumber(false);
     setOpenConfirmCode(true);
   };
@@ -32,10 +56,15 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
     setOpenMobileNumber(false);
     setOpenConfirmCode(false);
   };
+  const handleCloseMobileNumber = () => {
+    setOpenMobileNumber(false);
+  };
 
   const handleSubmitConfirmCode = () => {
+    // if succeeded
     successActionCallback();
     handleCloseConfirmCode();
+    // if failed
   };
 
   const mobileNumberDialog = () => {
@@ -59,9 +88,10 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
               margin="normal"
               id="name"
               label="Mobile Number"
-              type="phone"
+              type="text"
               fullWidth
               required={true}
+              onChange={handleTypeMobileNumber}
             />
           </DialogContent>
           <DialogActions>

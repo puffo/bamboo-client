@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import netlifyIdentity from "netlify-identity-widget";
 
 import Card from "@material-ui/core/Card";
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const products = [
+const templateProducts = [
   {
     id: 1,
     imageUrl:
@@ -67,8 +68,27 @@ const products = [
 
 export default function ProductCards() {
   const classes = useStyles();
-  const user = netlifyIdentity.currentUser();
-  console.log({ user });
+  const [products, setProducts] = useState(templateProducts);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = process.env.PRODUCT_SERVER_HOST + "products";
+      const result = await axios({
+        url: url,
+        method: "get",
+        headers: {
+          Accept: "application/json"
+        },
+        withCredentials: false
+      });
+      setProducts(result.data);
+    };
+
+    fetchData();
+  }, []);
+
+  // const user = netlifyIdentity.currentUser();
+  // console.log({ user });
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">

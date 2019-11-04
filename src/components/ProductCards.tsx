@@ -58,9 +58,9 @@ const products = [
     id: 3,
     imageUrl:
       "https://images.unsplash.com/photo-1530173235220-f6825c107a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
-    imageText: "Mountain bike image",
-    title: "Bike GPS",
-    description: "Stay on track.",
+    imageText: "Jacket image",
+    title: "Favourite Jacket",
+    description: "Keep your best clothing intact.",
     isFavorite: false
   }
 ];

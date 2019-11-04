@@ -44,6 +44,10 @@ export default function ProductCardControls({
     setExpanded(!expanded);
   };
 
+  const randomData = () => {
+    return Math.random() >= 0.5;
+  };
+
   if (favourite) {
     return (
       <div>
@@ -73,7 +77,7 @@ export default function ProductCardControls({
 
             {/* Replace functions and pass down props  */}
             <AdjustContractControls
-              currentlyAccepted={true}
+              currentlyAccepted={randomData()}
               validUntil={"11 Nov 2019"}
               removeAction={() => {
                 console.log("Calling microservice to remove contract...");

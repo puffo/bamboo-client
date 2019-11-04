@@ -1,21 +1,16 @@
 require("dotenv").config();
 const fetch = require("node-fetch");
 
-const { SERVER_HOST } = process.env;
-const USERS_ENDPOINT = SERVER_HOST + "users";
+const USERS_ENDPOINT = process.env.SERVER_HOST + "users";
 
 exports.handler = async (event, context) => {
-  const { identity, user } = context.clientContext;
-
+  const email = JSON.parse(event.body).user.email;
   const requestBody = JSON.stringify({
-    email: (user && user.email) || "blank",
+    email: email,
     mobileNumber: "unknown",
-    externalReference: (user && user.id) || "1231"
+    externalReference: email
   });
 
-  console.log(user);
-  console.log(requestBody);
-  console.log(USERS_ENDPOINT);
   return fetch(USERS_ENDPOINT, {
     method: "POST",
     headers: { Accept: "application/json" },

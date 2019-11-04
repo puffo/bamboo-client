@@ -2,6 +2,8 @@
 
 Bamboo Insurance minimum viable product (MVP) client side application. In-line with the goal of quickly building and deploying a MVP, [CodeSandbox](https://codesandbox.io) was used to bootstrap the application with [Netlify](https://netlify.com) used to deploy a live application.
 
+![preview](docs/preview.gif "Web app Preview")
+
 ## Features
 
 - Authentication using `netlify-identity-widget` out the box functionality

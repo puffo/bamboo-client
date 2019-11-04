@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import netlifyIdentity from "netlify-identity-widget";
 
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -38,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 
 const templateProducts = [
   {
-    id: 1,
+    id: "1asdfas",
     imageUrl:
       "https://images.unsplash.com/photo-1520089395365-001d26ba155b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2089&q=80",
     imageText: "iPhone image",
@@ -47,7 +46,7 @@ const templateProducts = [
     isFavorite: true
   },
   {
-    id: 2,
+    id: "A13121",
     imageUrl:
       "https://images.unsplash.com/photo-1530173235220-f6825c107a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
     imageText: "Mountain bike image",
@@ -56,9 +55,9 @@ const templateProducts = [
     isFavorite: false
   },
   {
-    id: 3,
+    id: "adfad",
     imageUrl:
-      "https://images.unsplash.com/photo-1530173235220-f6825c107a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
     imageText: "Jacket image",
     title: "Favourite Jacket",
     description: "Keep your best clothing intact.",
@@ -87,8 +86,30 @@ export default function ProductCards() {
     fetchData();
   }, []);
 
-  // const user = netlifyIdentity.currentUser();
-  // console.log({ user });
+  const handleAddContract = (product: Object) => {
+    console.log(product);
+    console.log(`Calling microservice to add product ${product}...`);
+    const fetchData = async () => {
+      const url = "/.netlify/functions/add-product";
+      axios({
+        url: url,
+        method: "post",
+        headers: {
+          Accept: "application/json"
+        },
+        data: JSON.stringify(product),
+        withCredentials: false
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(err => {
+          console.log(`Problem occured \n${err}`);
+        });
+    };
+
+    return fetchData();
+  };
 
   return (
     <Container className={classes.cardGrid} maxWidth="md">
@@ -111,9 +132,7 @@ export default function ProductCards() {
               <ProductCardControls
                 isFavorite={product.isFavorite}
                 addFavoriteAction={() => {
-                  console.log(
-                    `Calling microservice to add product ${product.id}...`
-                  );
+                  handleAddContract(product);
                 }}
               />
             </Card>

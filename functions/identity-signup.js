@@ -23,7 +23,7 @@ const productTemplates = [
   },
   {
     imageUrl:
-      "https://images.unsplash.com/photo-1530173235220-f6825c107a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
     imageText: "Jacket image",
     title: "Favourite Jacket",
     description: "Keep your best clothing intact.",

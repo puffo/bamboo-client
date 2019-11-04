@@ -72,7 +72,7 @@ export default function ProductCards() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = process.env.PRODUCT_SERVER_HOST + "products";
+      const url = "/.netlify/functions/products";
       const result = await axios({
         url: url,
         method: "get",

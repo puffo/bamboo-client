@@ -3,6 +3,7 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -11,16 +12,19 @@ interface ToggleProps {
   successActionCallback: () => void;
 }
 
-export default function FormDialog({ successActionCallback }: ToggleProps) {
+export default function MobileNumberDialog({
+  successActionCallback
+}: ToggleProps) {
   const [openMobileNumber, setOpenMobileNumber] = React.useState(false);
   const [openConfirmCode, setOpenConfirmCode] = React.useState(false);
 
   const [mobileNumber, setMobileNumber] = useState("");
+  const [code, setCode] = useState("");
 
-  const createVerification = () => {
+  const login = () => {
     const fetchData = async () => {
       const url = "/.netlify/functions/login";
-      const result = await axios({
+      const result = axios({
         url: url,
         method: "post",
         headers: {
@@ -28,9 +32,38 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
         },
         data: JSON.stringify({ to: mobileNumber }),
         withCredentials: false
-      });
-      console.log(result.data);
-      setMobileNumber(result.data);
+      })
+        .then(response => {
+          console.log("SMS sent");
+          setOpenMobileNumber(false);
+          setOpenConfirmCode(true);
+        })
+        .catch(err => {
+          alert(`Could not send sms! \n${err}`);
+        });
+    };
+
+    fetchData();
+  };
+
+  const confirm = () => {
+    const fetchData = async () => {
+      const url = "/.netlify/functions/confirm";
+      axios({
+        url: url,
+        method: "post",
+        headers: {
+          Accept: "application/json"
+        },
+        data: JSON.stringify({ to: mobileNumber, code: code }),
+        withCredentials: false
+      })
+        .then(response => {
+          return handleSuccessfulLogin();
+        })
+        .catch(error => {
+          return handleFailedLogin();
+        });
     };
 
     fetchData();
@@ -45,11 +78,12 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
   ) => {
     setMobileNumber(event.target.value);
   };
+  const handleTypeCode = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCode(event.target.value);
+  };
 
   const handleSubmitMobileNumber = () => {
-    createVerification();
-    setOpenMobileNumber(false);
-    setOpenConfirmCode(true);
+    login();
   };
 
   const handleCloseConfirmCode = () => {
@@ -60,11 +94,15 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
     setOpenMobileNumber(false);
   };
 
-  const handleSubmitConfirmCode = () => {
-    // if succeeded
+  const handleSuccessfulLogin = () => {
     successActionCallback();
     handleCloseConfirmCode();
-    // if failed
+  };
+
+  const handleFailedLogin = () => {
+    alert(
+      "Could not log you in. Please double check your phone number and the code sent via SMS."
+    );
   };
 
   const mobileNumberDialog = () => {
@@ -86,7 +124,7 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
             <TextField
               autoFocus
               margin="normal"
-              id="name"
+              id="mobile"
               label="Mobile Number"
               type="text"
               fullWidth
@@ -99,7 +137,7 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
               Cancel
             </Button>
             <Button onClick={handleSubmitMobileNumber} color="primary">
-              Verify
+              confirm
             </Button>
           </DialogActions>
         </Dialog>
@@ -115,7 +153,7 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
           onClose={handleCloseConfirmCode}
           aria-labelledby="form-dialog-title"
         >
-          {/* <DialogTitle id="form-dialog-title">Login</DialogTitle> */}
+          <DialogTitle id="form-dialog-title">{mobileNumber}</DialogTitle>
           <DialogContent>
             <DialogContentText variant="subtitle2">
               Enter your code
@@ -123,17 +161,18 @@ export default function FormDialog({ successActionCallback }: ToggleProps) {
             <TextField
               autoFocus
               margin="normal"
-              id="name"
+              id="code"
               label="Code"
               type="text"
               fullWidth
+              onChange={handleTypeCode}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseConfirmCode} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleSubmitConfirmCode} color="primary">
+            <Button onClick={confirm} color="primary">
               Confirm
             </Button>
           </DialogActions>

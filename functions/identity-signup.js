@@ -9,11 +9,11 @@ exports.handler = async (event, context) => {
   return fetch(USERS_ENDPOINT, {
     method: "POST",
     headers: { Accept: "application/json" },
-    body: {
+    body: JSON.stringify({
       email: user.email,
       mobileNumber: "unknown",
       externalReference: user.id
-    }
+    })
   })
     .then(response => response.json())
     .then(data => ({
